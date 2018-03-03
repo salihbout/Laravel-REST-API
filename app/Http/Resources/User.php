@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class Project extends JsonResource
+class User extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,12 +16,8 @@ class Project extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'content' => $this->content,
-            'comments' => Comment::collection($this->comments),
-            'user' => new User($this->user),
-            'created_at' => $this->created_at,
+            'email' => $this->email,
+            'created_at' => $this->created_at
         ];
     }
 }
- 
