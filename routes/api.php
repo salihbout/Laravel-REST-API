@@ -17,6 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
 //******** PROJECT **************//
 //List Projects
 Route::get('projects', 'ProjectController@index');
@@ -31,24 +32,43 @@ Route::post('project', 'ProjectController@store');
 Route::put('project/{id}', 'ProjectController@store');
 
 //******** USER **************//
-//delete Project
+//delete User
 Route::delete('user/{id}', 'UserController@destroy');
 
-//List Projects
+//List Users
 Route::get('users', 'UserController@index');
 
-//List single Project
+//List single User
 Route::get('user/{id}', 'UserController@show');
 
-//Create a new Project
+//Create a new User
 Route::post('user', 'UserController@store');
 
-//update project
-Route::put('user/{id}', 'UserController@store');
+//update User
+Route::put('user/{id}', 'UserController@update');
 
-//delete Project
+//delete User
 Route::delete('user/{id}', 'UserController@destroy');
 
+
+//******** COMMENT **************//
+//delete Project
+Route::delete('comment/{id}', 'commentController@destroy');
+
+//List Projects
+Route::get('comments', 'commentController@index');
+
+//List single Project
+Route::get('comment/{id}', 'commentController@show');
+
+//Create a new Project
+Route::post('comment', 'commentController@store');
+
+//update project
+Route::put('comment/{id}', 'commentController@store');
+
+//delete Project
+Route::delete('comment/{id}', 'commentController@destroy');
 
 
 

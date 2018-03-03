@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::paginate(1);
+        $user = User::paginate(15);
 
         return UserResource::collection($user);
     }
@@ -39,12 +39,24 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = $request->isMethod('put') ? User::findOrFail($request->user_id) : new User;
 
-        $user->id = $request->input('user_id');
-        $user->email = $request->input('email');
-        $user->password = $request->input('password');
 
+        //$user = $request->isMethod('put') ? User::findOrFail($request->user_id) : new User;
+        $rules = [
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6|confirmed',
+        ];
+        
+        $this->validate($request, $rules);
+
+        $data = $request->all();
+        $data['password'] = bcrypt($request->passport);
+        $data['verified'] = User::UNVERIFIED_USER;
+        $data['verification_token'] = User::generateVerificationCode();
+        $data['admin'] = User::REGULAR_USER;
+
+        $user = User::create($data);
 
         if($user->save()){
             return new UserResource($user);
@@ -85,7 +97,45 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $rules = [
+            
+            'email' => 'email|unique:users, email,'.$user->id,
+            'password' => 'min:6|confirmed',
+        ];
+        
+        $this->validate($request, $rules);
+
+        
+        if($request->has('name')){
+            $user->name = $request->name;
+        }
+
+        if($request->has('email') && $user->email != $request->email){
+            $user->verified = User::UNVERIFIED_USER;
+            $user->verification_token = User::generateVerificationCode();
+            $user->email = $request->email;
+
+        }
+
+        if($request->has('password')){
+            $user->password = bcrypt($request->password);
+
+        }
+
+        if(!$user->isDirty()){
+            return response()->json(['error' => 'you need to specify a different value to update', 'code' =>409], 409);
+
+        }
+
+        if($user->save()){
+            return new UserResource($user);
+        }else{
+            return response()->json(['error' => 'Something went wrong ... !', 'code' =>409], 409);
+
+        }
+
     }
 
     /**

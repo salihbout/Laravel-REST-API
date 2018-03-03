@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use App\User;
+use App\Project;
+use App\Comment;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -11,6 +13,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         $this->call(ProjectsTableSeeder::class);
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        User::truncate();
+        Project::truncate();
+        Comment::truncate();
+
+        $usersQuantity = 200;
+        $projectQuantity = 30;
+        $commentsQuantity = 60;
+        
+        factory(User::class, $usersQuantity)->create();
+        factory(Project::class, $projectQuantity)->create();
+        factory(Comment::class, $commentsQuantity)->create();
+
+
+
+
     }
 }
