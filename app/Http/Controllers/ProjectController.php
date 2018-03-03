@@ -39,8 +39,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $project = $request->isMethod('put') ? Project::findOrFail
-        ($request->project_id) : new Project;
+        $project = $request->isMethod('put') ? Project::findOrFail($request->project_id) : new Project;
 
         $project->id = $request->input('project_id');
         $project->title = $request->input('title');
