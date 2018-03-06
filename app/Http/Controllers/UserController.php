@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Mail\UserCreated;
+use Illuminate\Support\Facades\Mail;
 use App\User;
 use App\http\Resources\User as UserResource;
 
@@ -101,7 +102,7 @@ class UserController extends Controller
 
         $rules = [
             
-            'email' => 'email|unique:users, email,'.$user->id,
+            'email' => 'email|unique:users,email,'.$user->id,
             'password' => 'min:6|confirmed',
         ];
         
@@ -159,9 +160,25 @@ class UserController extends Controller
         $user->verification_token = null;
 
         if($user->save()){
-            return response()->json(['sucess' => 'Your account has been successfully verified !', 'code' =>409], 409);
+            return response()->json(['success' => 'Your account has been successfully verified !', 'code' =>409], 409);
 
         }
+
+    }
+
+    public function resend($id){
+
+        $user = User::findOrFail($id);
+
+        if($user->isVerified()){
+            return response()->json(['error' => 'Your account is already verified. Thanks !', 'code' =>409], 409);
+
+        }
+        
+        Mail::to($user)->send(new UserCreated($user));
+        
+        return response()->json(['success' => 'A verification link is resent again to your email !', 'code' =>409], 409);
+
 
     }
 }

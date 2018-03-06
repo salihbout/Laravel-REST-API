@@ -18,6 +18,11 @@ class DatabaseSeeder extends Seeder
         Project::truncate();
         Comment::truncate();
 
+        User::flushEventListerners();
+        Project::flushEventListerners();
+        Comment::flushEventListerners();
+
+
         $usersQuantity = 200;
         $projectQuantity = 30;
         $commentsQuantity = 60;

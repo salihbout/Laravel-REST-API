@@ -50,7 +50,11 @@ Route::put('user/{id}', 'UserController@update');
 //delete User
 Route::delete('user/{id}', 'UserController@destroy');
 
+//verify user token
 Route::get('users/verify/{token}', 'UserController@verify')->name('verify');
+
+//verify user token
+Route::get('users/{id}/resend', 'UserController@resend')->name('resend');
 
 
 //******** COMMENT **************//
