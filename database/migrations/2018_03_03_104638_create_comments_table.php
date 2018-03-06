@@ -21,7 +21,7 @@ class CreateCommentsTable extends Migration
             $table->text('body');
             $table->bigInteger('likes');
             $table->timestamps();
-
+            $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('project_id')->references('id')->on('projects');
         });

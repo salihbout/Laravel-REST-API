@@ -50,6 +50,8 @@ Route::put('user/{id}', 'UserController@update');
 //delete User
 Route::delete('user/{id}', 'UserController@destroy');
 
+Route::get('users/verify/{token}', 'UserController@verify')->name('verify');
+
 
 //******** COMMENT **************//
 //delete Project

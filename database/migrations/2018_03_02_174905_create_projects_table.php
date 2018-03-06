@@ -21,7 +21,7 @@ class CreateProjectsTable extends Migration
             $table->bigInteger('views');
             $table->integer('user_id')->unsigned();
             $table->timestamps();
-
+            $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

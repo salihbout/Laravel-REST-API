@@ -152,4 +152,16 @@ class UserController extends Controller
 
         }
     }
+
+    public function verify($token){
+        $user = User::where('verification_token',$token)->firstOrFail();
+        $user->verified = User::VERIFIED_USER;
+        $user->verification_token = null;
+
+        if($user->save()){
+            return response()->json(['sucess' => 'Your account has been successfully verified !', 'code' =>409], 409);
+
+        }
+
+    }
 }
