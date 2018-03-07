@@ -58,25 +58,29 @@ Route::get('users/{id}/resend', 'UserController@resend')->name('resend');
 
 
 //******** COMMENT **************//
-//delete Project
+//delete Comment
 Route::delete('comment/{id}', 'commentController@destroy');
 
-//List Projects
+//List Comments
 Route::get('comments', 'commentController@index');
 
-//List single Project
+//List single Comment
 Route::get('comment/{id}', 'commentController@show');
 
-//Create a new Project
+//Create a new Comment
 Route::post('comment', 'commentController@store');
 
-//update project
+//update Comment
 Route::put('comment/{id}', 'commentController@store');
 
-//delete Project
+//delete Comment
 Route::delete('comment/{id}', 'commentController@destroy');
 
 
 
+//******** LOGIN **************//
+
+Route::post('oauth/token', 'Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');
+Route::post('oauth/token/refresh', '\Laravel\Passport\Http\Controllers\TransientTokenController@refresh');
 
 
