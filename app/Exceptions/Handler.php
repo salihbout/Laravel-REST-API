@@ -66,6 +66,16 @@ class Handler extends ExceptionHandler
             return response()->json(['erros'=>'The specified URL cannot be found', 'code'=>404], 404);
         }
 
+        if($exception instanceof AuthorizationException){
+            
+            return response()->json(['erros'=>$exception->getMessage(), 'code'=>403], 403);
+        }
+
+        if($exception instanceof AuthenticationException){
+            
+            return response()->json(['error' => 'Unauthenticated.', 'code' => 401], 401);
+        }
+
 
         return parent::render($request, $exception);
     }

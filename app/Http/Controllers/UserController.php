@@ -10,6 +10,10 @@ use App\http\Resources\User as UserResource;
 
 class UserController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('client.credentials')->only(['store', 'resend']);
+    }
      /**
      * Display a listing of the resource.
      *

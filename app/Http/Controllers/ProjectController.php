@@ -9,6 +9,10 @@ use App\http\Resources\Project as ProjectResource;
 
 class ProjectController extends Controller
 {
+    
+    public function __construct(){
+        $this->middleware('client.credentials')->only(['index', 'show']);
+    }
     /**
      * Display a listing of the resource.
      *

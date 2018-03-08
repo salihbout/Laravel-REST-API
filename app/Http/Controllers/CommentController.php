@@ -9,7 +9,11 @@ use App\http\Resources\Comment as CommentResource;
 
 class CommentController extends Controller
 {
-     /**
+
+    public function __construct(){
+        $this->middleware('client.credentials')->only(['index', 'show']);
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
