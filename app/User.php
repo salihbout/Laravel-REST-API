@@ -49,7 +49,7 @@ class User extends Authenticatable
     public function setEmailAttribute($email){
         $this->attributes['email'] = strtolower($email);
     }
-
+ 
 
 
     public function isVerified(){
