@@ -20,10 +20,10 @@ class DatabaseSeeder extends Seeder
         Comment::truncate();
         Category::truncate();
 
-        User::flushEventListerners();
-        Project::flushEventListerners();
-        Comment::flushEventListerners();
-        Category::flushEventListerners();
+        User::flushEventListeners();
+        Project::flushEventListeners();
+        Comment::flushEventListeners();
+        Category::flushEventListeners();
 
 
         $usersQuantity = 200;
