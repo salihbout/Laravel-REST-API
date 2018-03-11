@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Mail\UserCreated;
 use Illuminate\Support\Facades\Mail;
 use App\User;
 use App\http\Resources\User as UserResource;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {

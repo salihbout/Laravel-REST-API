@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Comment;
 
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\Controller;
 use App\Comment;
 use App\http\Resources\Comment as CommentResource;
 

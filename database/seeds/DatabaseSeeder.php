@@ -30,11 +30,19 @@ class DatabaseSeeder extends Seeder
         $projectQuantity = 30;
         $categoriesQuantity = 5;
         $commentsQuantity = 60;
-        
+
+        $categories = Category::find(rand(1, 5));
+
         factory(User::class, $usersQuantity)->create();
-        factory(Project::class, $projectQuantity)->create();
-        factory(Comment::class, $commentsQuantity)->create();
         factory(Category::class, $categoriesQuantity)->create();
+        factory(Project::class, $projectQuantity)->create()->each(
+            function($project){
+                $categories = Category::all()->random(mt_rand(1,5))->pluck('id');
+                $project->categories()->attach($categories);
+            }
+        );
+        factory(Comment::class, $commentsQuantity)->create();
+        
 
 
 
