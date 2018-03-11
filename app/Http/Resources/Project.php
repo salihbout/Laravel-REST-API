@@ -22,6 +22,7 @@ class Project extends JsonResource
             'comments' => Comment::collection($this->comments),
             'user' => new User($this->user),
             'created_at' => $this->created_at,
+            'categories' => $this->categories,
         ];
     }
 }

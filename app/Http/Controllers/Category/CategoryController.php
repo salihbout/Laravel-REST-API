@@ -4,17 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use App\http\Resources\Category as CategoryResource;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    public function __construct(){
+        $this->middleware('client.credentials')->only(['index', 'show']);
+        $this->middleware('auth:api')->except(['index', 'show']);
+
+    }
+
     public function index()
     {
-        //
+        $categories = Category::all();
+
+        return CategoryResource::collection($categories);
     }
 
     /**
