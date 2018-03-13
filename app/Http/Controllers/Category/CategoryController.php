@@ -50,9 +50,10 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
-        //
+        $category = Category::findOrFail($id);
+        return new CategoryResource($category);
     }
 
     /**
@@ -75,7 +76,18 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $category->fill($request->only([
+            'name',
+            'description',
+        ]));
+
+        if($category->isClean()){
+            return response()->json(['error' => 'you need to specify a different value to update', 'code' =>409], 409);
+
+        }
+        
+        $category->save();
+        return new CategoryResource($category);
     }
 
     /**
@@ -86,6 +98,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return new CategoryResource($category);
     }
 }

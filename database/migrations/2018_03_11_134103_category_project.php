@@ -16,7 +16,6 @@ class CategoryProject extends Migration
         Schema::create('category_project', function (Blueprint $table) {
             $table->integer('category_id')->unsigned()->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-
             $table->integer('project_id')->unsigned()->nullable();
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
 
