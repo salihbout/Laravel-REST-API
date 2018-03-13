@@ -41,7 +41,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name' => 'required',
+            'description' => 'required',
+        ];
+
+        $this->validate($request, $rules);
+        $newCategory = Category::create($request->all());
+
+        return new CategoryResource($newCategory);
+
     }
 
     /**

@@ -45,7 +45,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $project = $request->isMethod('put') ? Project::findOrFail($request->project_id) : new Project;
+/*         $project = $request->isMethod('put') ? Project::findOrFail($request->project_id) : new Project;
 
         $project->id = $request->input('project_id');
         $project->title = $request->input('title');
@@ -53,7 +53,20 @@ class ProjectController extends Controller
 
         if($project->save()){
             return new ProjectResource($project);
-        }
+        } */
+
+
+        $rules = [
+            'title' => 'required',
+            'content' => 'required',
+        ];
+
+        $this->validate($request, $rules);
+        $newProject = Project::create($request->all());
+
+        return new ProjectResource($newProject);
+
+        
 
 
     }
@@ -88,9 +101,20 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Project $project)
     {
-        //
+        $project->fill($request->only([
+            'title',
+            'content',
+        ]));
+
+        if($project->isClean()){
+            return response()->json(['error' => 'you need to specify a different value to update', 'code' =>409], 409);
+
+        }
+        
+        $project->save();
+        return new ProjectResource($project);
     }
 
     /**

@@ -24,6 +24,7 @@ Route::resource('users.comments', 'User\UserCommentController',['only'=>['index'
 Route::resource('projects', 'Project\ProjectController');
 Route::resource('projects.comments', 'Project\ProjectCommentController',['only'=>['index']]);
 Route::resource('projects.user', 'Project\ProjectUserController',['only'=>['index']]);
+Route::resource('projects.categories', 'Project\ProjectCategoryController',['only'=>['index', 'update', 'destroy']]);
 
 // Comments
 Route::resource('comments', 'Comment\CommentController');
